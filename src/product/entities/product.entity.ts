@@ -7,6 +7,12 @@ import {
   // ManyToOne,
 } from 'typeorm';
 
+export enum Tag {
+  NEW = 'เหมือนใหม่',
+  MIDDLE = 'ปานกลาง',
+  GOOD = 'สภาพดี',
+}
+
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
@@ -19,10 +25,10 @@ export class Product {
   category: string;
 
   @Column({
-    type: 'varchar',
-    collation: 'utf8_general_ci',
-    length: 100,
-    default: null,
+    type: 'enum',
+    enum: Tag,
+    nullable: false,
+    default: Tag.GOOD,
   })
   tag: string;
 
