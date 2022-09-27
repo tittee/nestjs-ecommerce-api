@@ -5,7 +5,7 @@ services:
   db:
     container_name: nestjs_ecoomerce_db
     image: postgres:14.5-alpine
-    restart: no
+    restart: on-failure
     ports:
       - 5432:5432
     environment:
@@ -16,6 +16,6 @@ services:
   adminer:
     container_name: nestjs_ecoomerce_adminer
     image: adminer
-    restart: always
+    restart: on-failure
     ports:
       - 8080:8080
