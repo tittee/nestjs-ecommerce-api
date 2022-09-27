@@ -7,10 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProductService } from './product/product.service';
 import { ProductModule } from './product/product.module';
-import { MulterModule } from '@nestjs/platform-express';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { ImageModule } from './image/image.module';
+// import { MulterModule } from '@nestjs/platform-express';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
+// import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -28,13 +28,13 @@ import { ImageModule } from './image/image.module';
     AuthModule,
     UsersModule,
     ProductModule,
-    MulterModule.register({
-      dest: './uploads',
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-    }),
-    ImageModule,
+    // MulterModule.register({
+    //   dest: './uploads',
+    // }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'uploads'),
+    // }),
+    // ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService, ProductService],
