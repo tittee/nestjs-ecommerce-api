@@ -14,16 +14,17 @@ async function bootstrap() {
   );
   await app.enableCors();
   await app.useGlobalPipes(new ValidationPipe());
+  await app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('NestJS Ecommerce API')
     .setDescription('The cats API description')
-    .addTag('produts')
+    .addTag('products')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger-api', app, document);
 
   await app.listen(3000);
   // console.log(`Application is running on: ${await app.getUrl()}`);
