@@ -4,14 +4,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  // ManyToOne,
+  ManyToOne,
 } from 'typeorm';
-
-export enum Tag {
-  NEW = 'เหมือนใหม่',
-  MIDDLE = 'ปานกลาง',
-  GOOD = 'สภาพดี',
-}
 
 @Entity()
 export class Product {
@@ -21,37 +15,36 @@ export class Product {
   @Column({ unique: true, type: 'varchar', length: 190 })
   name: string;
 
-  @Column({ type: 'text', collation: 'utf8_general_ci', default: null })
-  category: string;
+  @Column({ type: 'text' })
+  content: string;
 
-  @Column({
-    type: 'enum',
-    enum: Tag,
-    nullable: false,
-    default: Tag.GOOD,
-  })
-  tag: string;
-
-  @Column({ type: 'text', collation: 'utf8_general_ci' })
-  description: string;
-
-  @Column({ type: 'text', collation: 'utf8_general_ci' })
+  @Column({ type: 'text', default: null })
   image: string;
 
-  @Column({ type: 'text', collation: 'utf8_general_ci', default: null })
-  href: string;
+  @Column({ type: 'text', default: null })
+  document: string;
 
-  @Column({ type: 'decimal', collation: 'utf8_general_ci', width: 20 })
-  price: number;
+  @Column({ type: 'blob' })
+  note: string;
 
-  @Column({ width: 5, type: 'tinyint', default: 1 })
-  stock: number;
+  @Column({ type: 'int', width: 10 })
+  added_by: number;
+
+  @Column({ type: 'int', width: 10 })
+  updated_by: number;
 
   @CreateDateColumn()
-  dateCreated: Date;
+  created: Date;
 
   @UpdateDateColumn()
-  updatedDate: Date;
+  updated: Date;
+
+  @Column({ width: 1, type: 'tinyint', default: 1 })
+  enable: number;
+
+  //Default : Disable , Active
+  @Column({ length: 10, default: 'Active' })
+  status: string;
 
   // @ManyToOne(() => User, (user) => user.promotion)
   // user: User;
