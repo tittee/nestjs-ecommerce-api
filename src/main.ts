@@ -12,6 +12,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+  await app.setGlobalPrefix('api');
   await app.enableCors();
   await app.useGlobalPipes(new ValidationPipe());
 
@@ -23,7 +24,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger-api', app, document);
 
   await app.listen(3000);
   // console.log(`Application is running on: ${await app.getUrl()}`);

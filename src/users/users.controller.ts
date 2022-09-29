@@ -19,18 +19,16 @@ import { User } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guards';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-
 @ApiBearerAuth()
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService,) {}
+  constructor(private usersService: UsersService) {}
 
   @Post('signup')
   @ApiOperation({ summary: 'User sign up' })
-  signUp(@Body() signUpDto: SignUpDto
-  ): Promise<User> {
-      return this.usersService.signUp(signUpDto)
+  signUp(@Body() signUpDto: SignUpDto): Promise<User> {
+    return this.usersService.signUp(signUpDto);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -39,7 +37,6 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -56,10 +53,10 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
+  @Get(':email')
   @ApiOperation({ summary: 'Get user by id' })
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  findOne(@Param('email') email: string) {
+    return this.usersService.findOne(email);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -72,7 +69,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('change-password/:id')
   @ApiOperation({ summary: 'Change user password for admin mode' })
-  changepassword(@Param('id') id: number, @Body() ChangePasswordDto: ChangeUserPasswordDto) {
+  changepassword(
+    @Param('id') id: number,
+    @Body() ChangePasswordDto: ChangeUserPasswordDto,
+  ) {
     return this.usersService.changepassword(id, ChangePasswordDto);
   }
 

@@ -40,25 +40,8 @@ export class UsersService {
     }
   }
 
-  async findOne(id: number) {
-    //Select *,(select firstname from user where user.id = p.userId) as p_owner_firstname,(select lastname from user where user.id = p.userId) as p_owner_lastname from promotion as p
-    return await this.usersRepository
-      .createQueryBuilder('m')
-      .addSelect((subQuery) => {
-        return subQuery
-          .select('user.firstname')
-          .from(User, 'user')
-          .where('user.id = m.added_by');
-      }, 'm_add_by_firstname')
-      .addSelect((subQuery) => {
-        return subQuery
-          .select('user.lastname')
-          .from(User, 'user')
-          .where('user.id = m.added_by');
-      }, 'm_add_by_lastname')
-      .where('id =:id', { id })
-      .getRawOne();
-    //return await this.promoRepository.findOne({ where: { id } });
+  async findOne(email: string): Promise<User | undefined> {
+    return await this.usersRepository.findOne({ where: { email } });
   }
   async getProfile(id: number): Promise<any> {
     return this.usersRepository.findOneBy({ id });
