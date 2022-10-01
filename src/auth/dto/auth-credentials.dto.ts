@@ -26,27 +26,4 @@ export class AuthCredentialsDto {
     message: 'password too weak',
   })
   password: string;
-
-  @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  @Match('password')
-  passwordConfirm: string;
-
-  @IsString()
-  @IsNotEmpty()
-  firstname: string;
-
-  @IsString()
-  @IsNotEmpty()
-  lastname: string;
-
-  @IsDate()
-  created: Date;
-
-  @IsDate()
-  updated: Date;
-
-  @IsNumber()
-  enable: number;
 }
