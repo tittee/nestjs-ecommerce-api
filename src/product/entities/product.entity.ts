@@ -4,33 +4,41 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { User } from './../../user/entities/user.entity';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'varchar', length: 100 })
+  category: string;
+
   @Column({ unique: true, type: 'varchar', length: 190 })
   name: string;
 
-  @Column({ type: 'text' })
-  content: string;
+  @Column({ type: 'varchar', length: 20 })
+  tag: string;
 
-  @Column({ type: 'text', default: null })
+  @Column({ type: 'text' })
+  description: string;
+
+  @Column({ type: 'text' })
   image: string;
 
-  @Column({ type: 'text', default: null })
-  document: string;
+  @Column({ type: 'text' })
+  href: string;
 
-  @Column({ type: 'blob' })
-  note: string;
+  @Column({ nullable: false, type: 'float', default: 0.0 })
+  price!: number;
 
-  @Column({ type: 'int', width: 10 })
-  added_by: number;
+  @Column({ type: 'smallint' })
+  stock: number;
 
-  @Column({ type: 'int', width: 10 })
-  updated_by: number;
+  @Column({ type: 'varchar', length: 100 })
+  condition: number;
 
   @CreateDateColumn()
   created: Date;
@@ -38,13 +46,6 @@ export class Product {
   @UpdateDateColumn()
   updated: Date;
 
-  @Column({ width: 1, type: 'int', default: 1 })
-  enable: number;
-
-  //Default : Disable , Active
-  @Column({ length: 10, default: 'Active' })
-  status: string;
-
-  // @ManyToOne(() => User, (user) => user.promotion)
-  // user: User;
+  @ManyToOne(() => User, (user) => user.id)
+  user: User;
 }
