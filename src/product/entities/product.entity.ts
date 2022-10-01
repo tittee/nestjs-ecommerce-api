@@ -4,7 +4,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -39,7 +38,7 @@ export class Product {
   @UpdateDateColumn()
   updated: Date;
 
-  @Column({ width: 1, type: 'tinyint', default: 1 })
+  @Column({ width: 1, type: 'int', default: 1 })
   enable: number;
 
   //Default : Disable , Active

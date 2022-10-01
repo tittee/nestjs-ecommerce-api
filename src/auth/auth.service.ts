@@ -1,15 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { UsersService } from '../users/users.service';
+import { Injectable } from '@nestjs/common';
+import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './jwt/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private usersService: UserService,
     private jwtService: JwtService,
   ) {}
 
@@ -22,28 +19,9 @@ export class AuthService {
     return null;
   }
 
-  async signUp(): Promise<any> {
-    return 'signUp';
-  }
-
-  // async signIn(
-  //   authCredentialsDto: AuthCredentialsDto,
-  // ): Promise<{ accessToken: string }> {
-  //   const { email, password } = authCredentialsDto;
-  //   const user = await this.usersService.findOne(email);
-
-  //   if (user && (await bcrypt.compare(password, user.password))) {
-  //     const payload: JwtPayload = { email };
-  //     const accessToken: string = await this.jwtService.sign(payload);
-  //     return { accessToken };
-  //   } else {
-  //     throw new UnauthorizedException('Please check your login credentials');
-  //   }
-  // }
-
   async signIn(user: any): Promise<{ accessToken: string }> {
     console.log('signIn', user.id);
-    const payload = { username: user.username, sub: user.id };
+    const payload = { email: user.email, sub: user.id };
     return {
       accessToken: this.jwtService.sign(payload),
     };
