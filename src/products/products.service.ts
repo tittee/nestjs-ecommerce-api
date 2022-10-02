@@ -30,6 +30,14 @@ export class ProductsService {
     return found;
   }
 
+  async getProductByUserId(userId: string): Promise<Product[]> {
+    const result = await this.productsRepository.find({
+      where: { userId: userId },
+    });
+
+    return result;
+  }
+
   createProduct(
     createProductDto: CreateProductDto,
     user: User,

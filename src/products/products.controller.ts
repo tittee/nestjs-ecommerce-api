@@ -47,6 +47,11 @@ export class ProductsController {
     return this.productsService.getProductById(id, user);
   }
 
+  @Get('/:userId')
+  getProductByUserId(@Param('userId') userId: string): Promise<Product[]> {
+    return this.productsService.getProductByUserId(userId);
+  }
+
   @Post()
   createProduct(
     @Body() createProductDto: CreateProductDto,
