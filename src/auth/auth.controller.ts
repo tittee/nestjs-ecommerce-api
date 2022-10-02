@@ -1,35 +1,21 @@
-import { Body, Controller, Req, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-@ApiBearerAuth()
-@ApiTags('SSO Authentication')
+import { CreateUserDto } from './dto/create-user.dto';
+
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('signin')
+  @Post('/signup')
+  signUp(@Body() createUserDto: CreateUserDto): Promise<void> {
+    return this.authService.signUp(createUserDto);
+  }
+
+  @Post('/signin')
   signIn(
     @Body() authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ accessToken: string }> {
     return this.authService.signIn(authCredentialsDto);
   }
-
-  // @UseGuards(JwtAuthGuard)
-  // @Post('signin')
-  // @ApiConsumes('application/x-www-form-urlencoded')
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       email: { type: 'string' },
-  //       password: { type: 'string' },
-  //     },
-  //   },
-  // })
-  // @ApiOperation({ summary: 'Sign in' })
-  // signIn(@Request() req: any): Promise<any> {
-  //   return this.authService.signIn(req.user);
-  // }
 }
