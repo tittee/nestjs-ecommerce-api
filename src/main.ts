@@ -8,10 +8,13 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
+  await app.setGlobalPrefix('api');
   await app.enableCors();
   await app.useGlobalPipes(new ValidationPipe());
-  await app.setGlobalPrefix('api');
 
   const config = new DocumentBuilder()
     .setTitle('NestJS Ecommerce API')
@@ -24,6 +27,6 @@ async function bootstrap() {
   SwaggerModule.setup('swagger-api', app, document);
 
   await app.listen(3000);
-  // console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
